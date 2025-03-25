@@ -109,14 +109,17 @@ function changeImgElement(element, src) {
 }
 
 function createNewItem(element) {
+    const newItemContainer = document.createElement('div');
+    newItemContainer.classList.add('result-item-container');
+    newItemContainer.setAttribute('draggable', true);
+    newItemContainer.setAttribute('ondragstart', 'dragstartHandler(event)');
+
     const type = element.getAttribute('data-type');
     const itemData = typesOfItems[type];
     const newItem = document.createElement(itemData.type);
     const id = `item-${Date.now()}`;
     newItem.id = id;
-
-    newItem.setAttribute('draggable', true);
-    newItem.setAttribute('ondragstart', 'dragstartHandler(event)');
+    newItem.setAttribute('draggable', false);
 
     itemData.attributes && Object.keys(itemData.attributes).forEach(key => {
         newItem.setAttribute(key, itemData.attributes[key]);
@@ -137,7 +140,18 @@ function createNewItem(element) {
 
     newItem.classList.add('result-item');
 
-    return newItem;
+    const delBtn = document.createElement('button');
+    delBtn.classList.add('del-btn');
+    delBtn.innerHTML = '🗑️';
+
+    delBtn.addEventListener('click', () => {
+        newItemContainer.remove();
+    });
+
+    newItemContainer.appendChild(delBtn);
+    newItemContainer.appendChild(newItem);
+
+    return newItemContainer;
 }
 
 function closeModal() {

@@ -12,13 +12,18 @@ function dropHandler(ev) {
         return;
     }
     const data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    const draggedElement = document.getElementById(data);
+    if (draggedElement) {
+        ev.target.appendChild(draggedElement);
+    } else {
+        console.error(`Element with ID "${data}" not found.`);
+    }
 }
 
 let draggedItem = null;
 
 resultUIContent.addEventListener('dragstart', (event) => {
-    if (event.target.classList.contains('result-item')) {
+    if (event.target.classList.contains('result-item-container')) {
         draggedItem = event.target;
         event.target.classList.add('dragging');
     }
@@ -30,7 +35,7 @@ resultUIContent.addEventListener('dragend', (event) => {
         draggedItem = null;
     }
     const placeholder = document.querySelector('.placeholder');
-    if (placeholder) placeholder.remove(); // Supprimer le placeholder
+    if (placeholder) placeholder.remove();
 });
 
 resultUIContent.addEventListener('dragover', (event) => {
@@ -39,10 +44,10 @@ resultUIContent.addEventListener('dragover', (event) => {
     const placeholder = document.querySelector('.placeholder');
     if (placeholder) placeholder.remove();
 
-    if (afterElement == null && draggedItem) { // Vérifier si un élément est draggé
+    if (afterElement == null && draggedItem) {
         const newPlaceholder = createPlaceholder();
         resultUIContent.appendChild(newPlaceholder);
-    } else if (draggedItem) { // Vérifier si un élément est draggé
+    } else if (draggedItem) {
         const newPlaceholder = createPlaceholder();
         resultUIContent.insertBefore(newPlaceholder, afterElement);
     }
@@ -58,7 +63,7 @@ resultUIContent.addEventListener('drop', (event) => {
 });
 
 function getDragAfterElement(container, y) {
-    const draggableElements = [...container.querySelectorAll('.result-item:not(.dragging)')];
+    const draggableElements = [...container.querySelectorAll('.result-item-container:not(.dragging)')];
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect();
         const offset = y - box.top - box.height / 2;

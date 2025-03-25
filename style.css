@@ -9,6 +9,8 @@
     --bg-green--hover: #29903b;
     --text-primary: #f0f6fc;
     --text-secondary: #9198a1;
+    --text-red: #fa5e55;
+    --border-color: #ffffff1a;
 }
 
 html, body {
@@ -67,11 +69,40 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    overflow: auto;
 }
 
 .result-ui {
     width: 100%;
+}
+
+.result-item-container {
+    margin-left: -40px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    & .del-btn {
+        opacity: 0;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        color: var(--text-red);
+        border-radius: .375rem;
+        transition: all 0.3s;
+
+        &:hover {
+            background-color: var(--text-red);
+            color: var(--text-primary);
+        }
+    }
+
+    &:hover .del-btn {
+        opacity: 1;
+    }
 }
 
 .result-item {
