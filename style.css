@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    --bg-primary: #0d1117;
+    --bg-secondary: #151b23;
+    --bg-green: #238636;
+    --bg-green--hover: #29903b;
+    --text-primary: #f0f6fc;
+    --text-secondary: #9198a1;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 362px 1fr;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.settings-section {
+    padding: 20px;
+    border-right: 1px solid #000;
+}
+
+.select-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.selectable-item {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: .375rem;
+    background-color: var(--bg-secondary);
+    padding: 10px;
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-secondary);
+
+    > img {
+        width: 50%;
+        height: 50%;
+        object-fit: cover;
+        border-radius: .375rem;
+        filter: invert(1);
+    }
+}
+
+.results-section {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow: auto;
+}
+
+.result-ui {
+    width: 100%;
+}
+
+.result-item {
+    border: none;
+    margin: 2px;
+    padding: 2px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    color: var(--text-primary);
+    width: 100%;
+
+    &:active, &:focus, &:focus-visible, &:hover {
+        outline: none;
+        background-color: var(--bg-secondary);
+    }
+
+    &:is(.md-text, [class^="md-h"]) {
+        margin-top: 5px;
+        resize: none;
+        height: auto;
+        min-height: fit-content;
+    }
+    &.md-text {
+        font-size: 14px;
+    }
+    &.md-h1 {
+        font-size: 24px;
+        font-weight: 700;
+    }
+    &.md-h2 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    &.md-h3 {
+        font-size: 18px;
+        font-weight: 500;
+    }
+    &.md-tools {
+        width: fit-content;
+        height: fit-content;
+    }
+    &.md-img {
+        width: auto;
+        height: auto;
+        object-fit: cover;
+    }
+}
+
+.result-item.dragging {
+    opacity: 0.5;
+}
+
+.drop-section .placeholder {
+    height: 50px;
+    background-color: var(--bg-secondary);
+    border: 2px dashed var(--text-secondary);
+    margin: 5px 0;
+}
+
+.item-settings {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    background-color: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: .375rem;
+    color: var(--text-secondary);
+    width: 300px;
+    max-width: 100dvw;
+
+    & > form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+
+        & > .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            & > label {
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            & > select {
+                padding: 5px;
+                border-radius: .375rem;
+                border: 1px solid var(--text-secondary);
+                background-color: var(--bg-secondary);
+                color: var(--text-primary);
+            }
+
+            & > input {
+                padding: 5px;
+                border-radius: .375rem;
+                border: 1px solid var(--text-secondary);
+                background-color: var(--bg-secondary);
+                color: var(--text-primary);
+            }
+        }
+
+        & > button {
+            padding: 5px;
+            border-radius: .375rem;
+            border: none;
+            background-color: var(--bg-green);
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+
+            &:hover {
+                background-color: var(--bg-green--hover);
+            }
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    filter: invert(1);
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    & > img {
+        width: 20px;
+        height: 20px;
+    }
+}

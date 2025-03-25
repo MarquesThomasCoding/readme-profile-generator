@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>GitHub Readme Profile Generator</title>
+</head>
+<body>
+    <section class="settings-section">
+        <div class="select-container">
+            <div class="selectable-item" data-type="md-text">
+                <img src="/images/text.svg" alt="" srcset="">
+                <p>Text</p>
+            </div>
+            <div class="selectable-item" data-type="md-img">
+                <img src="/images/img.svg" alt="" srcset="">
+                <p>Image</p>
+            </div>
+            <div class="selectable-item" data-type="md-h1">
+                <img src="/images/h1.svg" alt="" srcset="">
+                <p>Heading 1</p>
+            </div>
+            <div class="selectable-item" data-type="md-h2">
+                <img src="/images/h2.svg" alt="" srcset="">
+                <p>Heading 2</p>
+            </div>
+            <div class="selectable-item" data-type="md-h3">
+                <img src="/images/h3.svg" alt="" srcset="">
+                <p>Heading 3</p>
+            </div>
+            <div class="selectable-item" data-type="md-tools">
+                <img src="/images/tools.svg" alt="" srcset="">
+                <p>Tools</p>
+            </div>
+            <div class="selectable-item" data-type="md-repo-list">
+                <img src="/images/repo-list.svg" alt="" srcset="">
+                <p>Repos</p>
+            </div>
+        </div>
+    </section>
+    <section class="results-section">
+        <div class="result-ui">
+            <div class="result-ui-content" id="result-ui-content">
+                <div class="drop-section droppable" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="item-settings hidden" data-type="md-tools">
+        <button class="close-modal" onclick="closeModal()"><img src="/images/x.svg" alt="" srcset=""></button>
+        <form>
+            <div class="form-group">
+                <label>Theme</label>
+                <select name="theme" onchange="changeTheme(this)">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Icons per line</label>
+                <input type="number" name="icons-per-line" onchange="changeIconsPerLine(this)" value="5">
+            </div>
+            <div class="form-group">
+                <label>Icons</label>
+                <input type="text" name="icons" onchange="changeIcons(this)" value="js,html,css,wasm">
+            </div>
+        </form>
+    </div>
+    <div class="item-settings hidden" data-type="md-img">
+        <button class="close-modal" onclick="closeModal()"><img src="/images/x.svg" alt="" srcset=""></button>
+        <form>
+            <div class="form-group">
+                <label>Source</label>
+                <input type="text" name="src" onchange="changeSrc(this)" value="https://placehold.co/150x150">
+            </div>
+        </form>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="dragndrop.js"></script>
+</body>
+</html>
