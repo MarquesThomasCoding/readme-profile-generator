@@ -1,11 +1,10 @@
 const typesOfItems = {
     "md-text": {
-        "type": "textarea",
+        "type": "div",
         "attributes": {
-            "value": "Text",
+            "contenteditable": "true",
             "class": "md-text",
         },
-        "autoResize": true,
     },
     "md-img": {
         "type": "img",
@@ -16,28 +15,25 @@ const typesOfItems = {
         "hasSettings": true,
     },
     "md-h1": {
-        "type": "textarea",
+        "type": "div",
         "attributes": {
-            "value": "Heading 1",
+            "contenteditable": "true",
             "class": "md-h1",
         },
-        "autoResize": true,
     },
     "md-h2": {
-        "type": "textarea",
+        "type": "div",
         "attributes": {
-            "value": "Heading 2",
+            "contenteditable": "true",
             "class": "md-h2",
         },
-        "autoResize": true,
     },
     "md-h3": {
-        "type": "textarea",
+        "type": "div",
         "attributes": {
-            "value": "Heading 3",
+            "contenteditable": "true",
             "class": "md-h3",
         },
-        "autoResize": true,
     },
     "md-tools": {
         "type": "img",
@@ -49,7 +45,22 @@ const typesOfItems = {
             "icons-per-line": "5",
         },
         "hasSettings": true,
-    }
+    },
+    "md-repo-list": {
+        "type": "img",
+        "attributes": {
+            "class": "md-repo-list",
+            "src": "https://github-readme-stats.vercel.app/api/pin/",
+            "username": "",
+            "repo": "",
+            "title_color": "fff",
+            "icon_color": "f9f9f9",
+            "text_color": "9f9f9f",
+            "bg_color": "151515",
+            "border_color": "303030",
+        },
+        "hasSettings": true,
+    },
 }
 
 const selectableItems = document.querySelectorAll('.selectable-item');
@@ -107,6 +118,25 @@ function changeImgElement(element, src) {
     element.setAttribute('src', src);
     element.src = src;
 }
+function changeUsername(element) {
+    const parentItemSettings = element.closest('.item-settings');
+    const relatedItem = document.getElementById(parentItemSettings.getAttribute('related-item'));
+    const username = element.value;
+    changeRepoListElement(relatedItem, username, relatedItem.getAttribute('repo'));
+}
+
+function changeRepos(element) {
+    const parentItemSettings = element.closest('.item-settings');
+    const relatedItem = document.getElementById(parentItemSettings.getAttribute('related-item'));
+    const repo = element.value;
+    changeRepoListElement(relatedItem, relatedItem.getAttribute('username'), repo);
+}
+
+function changeRepoListElement(element, username, repo) {
+    element.setAttribute('username', username);
+    element.setAttribute('repo', repo);
+    element.src = `https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${repo}&title_color=fff&icon_color=f9f9f9&text_color=9f9f9f&bg_color=151515&border_color=303030`;
+}
 
 function createNewItem(element) {
     const newItemContainer = document.createElement('div');
@@ -142,7 +172,11 @@ function createNewItem(element) {
 
     const delBtn = document.createElement('button');
     delBtn.classList.add('del-btn');
-    delBtn.innerHTML = '🗑️';
+    delBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M9 3h6a1 1 0 0 1 1 1v1h4a1 1 0 1 1 0 2h-1v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7H4a1 1 0 1 1 0-2h4V4a1 1 0 0 1 1-1zm1 2v1h4V5h-4zm-3 4v11h10V9H7z"/>
+        </svg>
+    `;
 
     delBtn.addEventListener('click', () => {
         newItemContainer.remove();
@@ -180,3 +214,19 @@ function populateSettings(itemSettingsTools, relatedItem) {
         textarea.value = relatedItem.getAttribute(attribute);
     });
 }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    const convertButton = document.getElementById('convert-button');
+    const observer = new MutationObserver(() => {
+        const hasResultItems = document.querySelector('.result-item') !== null;
+        convertButton.disabled = !hasResultItems;
+    });
+
+    observer.observe(document.getElementById('result-ui-content'), { childList: true, subtree: true });
+});

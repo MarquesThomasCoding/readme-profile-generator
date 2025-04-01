@@ -6,19 +6,22 @@ function convertHTMLToMarkdown() {
 
     elements.forEach(element => {
         if (element.classList.contains('md-text')) {
-            markdown += `${element.value}\n\n`;
+            markdown += `${element.textContent.trim()}\n\n`;
         } else if (element.classList.contains('md-h1')) {
-            markdown += `# ${element.value}\n\n`;
+            markdown += `# ${element.textContent.trim()}\n\n`;
         } else if (element.classList.contains('md-h2')) {
-            markdown += `## ${element.value}\n\n`;
+            markdown += `## ${element.textContent.trim()}\n\n`;
         } else if (element.classList.contains('md-h3')) {
-            markdown += `### ${element.value}\n\n`;
+            markdown += `### ${element.textContent.trim()}\n\n`;
         } else if (element.classList.contains('md-img')) {
             const src = element.getAttribute('src');
             markdown += `![Image](${src})\n\n`;
         } else if (element.classList.contains('md-tools')) {
             const icons = element.getAttribute('src');
             markdown += `![Tools](${icons})\n\n`;
+        } else if (element.classList.contains('md-repo-list')) {
+            const repo = element.getAttribute('src');
+            markdown += `![Repo List](${repo})\n\n`;
         }
     });
 
@@ -27,4 +30,14 @@ function convertHTMLToMarkdown() {
 
 function logMarkdown(markdown) {
     console.log(markdown.split('\n').join('\n'));
+}
+
+function downloadMarkdownFile(markdown) {
+    const blob = new Blob([markdown], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'document.md';
+    a.click();
+    URL.revokeObjectURL(url);
 }

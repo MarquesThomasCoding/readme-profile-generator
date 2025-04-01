@@ -7,6 +7,11 @@
     <title>GitHub Readme Profile Generator</title>
 </head>
 <body>
+    <header class="header">
+        <a href="https://github.com/MarquesThomasCoding">MarquesThomasCoding</a>
+        <small>/</small>
+        <p>readme-profile-generator</p>
+    </header>
     <section class="settings-section">
         <div class="select-container">
             <div class="selectable-item" data-type="md-text">
@@ -38,6 +43,15 @@
                 <p>Repos</p>
             </div>
         </div>
+        <div class="tip">
+            <span class="tip-icon">
+                <svg fill="#9198a1" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+                    <path d="M8.5.75a.75.75 0 0 0-1.5 0v5.19L4.391 3.33a.75.75 0 1 0-1.06 1.061L5.939 7H.75a.75.75 0 0 0 0 1.5h5.19l-2.61 2.609a.75.75 0 1 0 1.061 1.06L7 9.561v5.189a.75.75 0 0 0 1.5 0V9.56l2.609 2.61a.75.75 0 1 0 1.06-1.061L9.561 8.5h5.189a.75.75 0 0 0 0-1.5H9.56l2.61-2.609a.75.75 0 0 0-1.061-1.06L8.5 5.939V.75Z"></path>
+                </svg>
+            </span>
+            <p><i>Click on an item to add it to the preview</i></p>
+        </div>
+        <button id="convert-button" onclick="downloadMarkdownFile(convertHTMLToMarkdown())" disabled>Convert</button>
     </section>
     <section class="results-section">
         <div class="result-ui">
@@ -48,7 +62,7 @@
     </section>
 
     <div class="item-settings hidden" data-type="md-tools">
-        <button class="close-modal" onclick="closeModal()"><img src="/images/x.svg" alt="" srcset=""></button>
+        <button class="close-modal btn-danger" onclick="closeModal()"><img src="/images/x.svg" alt="" srcset=""></button>
         <form>
             <div class="form-group">
                 <label>Theme</label>
@@ -68,11 +82,24 @@
         </form>
     </div>
     <div class="item-settings hidden" data-type="md-img">
-        <button class="close-modal" onclick="closeModal()"><img src="/images/x.svg" alt="" srcset=""></button>
+        <button class="close-modal btn-danger" onclick="closeModal()"><img src="/images/x.svg" alt="" srcset=""></button>
         <form>
             <div class="form-group">
                 <label>Source</label>
                 <input type="text" name="src" onchange="changeSrc(this)" value="https://placehold.co/150x150">
+            </div>
+        </form>
+    </div>
+    <div class="item-settings hidden" data-type="md-repo-list">
+        <button class="close-modal btn-danger" onclick="closeModal()"><img src="/images/x.svg" alt="" srcset=""></button>
+        <form>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" onchange="changeUsername(this)">
+            </div>
+            <div class="form-group">
+                <label>Repositories</label>
+                <input type="text" name="repo" onchange="changeRepos(this)">
             </div>
         </form>
     </div>
